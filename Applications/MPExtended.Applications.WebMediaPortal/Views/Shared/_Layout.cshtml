@@ -5,9 +5,85 @@
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/TVGuide.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+
+    <style type="text/css">
+  body {
+    color: black; background-color: white;
+    font-size: 100.01%;
+    font-family: Helvetica,Arial,sans-serif;
+    margin: 0; padding: 1em;
+    min-width: 41em; /* Mindestbreite verhindert Umbruch und Anzeigefehler in modernen Browsern */
+  }
+
+  div#Header {
+    font-size: 1.5em;
+    margin: 0 0 0.7em; padding: 0.3em;
+    text-align: center;
+    background-color: #fed;
+    border: 2px ridge silver;
+  }
+
+  ul#SubNavigation {
+    font-size: 0.83em;
+    float: left; width: 18em;
+    margin: 0 0 1.2em; padding: 0;
+    border: 1px dashed silver;
+  }
+  ul#SubNavigation li {
+    list-style: none;
+    margin: 0; padding: 0.5em;
+  }
+  ul#SubNavigation a {
+    display: block;
+    padding: 0.2em;
+    font-weight: bold;
+  }
+  ul#SubNavigation a:link {
+    color: black; background-color: #eee;
+  }
+  ul#SubNavigation a:visited {
+    color: #666; background-color: #eee;
+  }
+  ul#SubNavigation a:hover {
+    color: black; background-color: white;
+  }
+  ul#SubNavigation a:active {
+    color: white; background-color: gray;
+  }
+
+  div#Content {
+    
+    margin: 7em 1em 1em 18em;
+    padding: 0 1em;
+    
+  }
+  * html div#Content {
+    height: 1em;  /* Workaround gegen den 3-Pixel-Bug des Internet Explorer bis Version 6 */
+  }
+  div#Content h2 {
+    font-size: 1.2em;
+    margin: 0.2em 0;
+  }
+  div#Content p {
+    font-size: 1em;
+    margin: 1em 0;
+  }
+
+  p#Footer {
+    clear: both;
+    font-size: 0.9em;
+    margin: 0; padding: 0.1em;
+    text-align: center;
+    background-color: #fed; border: 1px solid silver;
+  }
+</style>
 </head>
+
+
+
 <body>
-    <div id="header">
+
+  <div id="header">
         <div id='logo'></div>
         <h1>WebMediaPortal</h1>
         <div id="logindisplay">
@@ -34,6 +110,19 @@
             </ul>
         </div>
     </div>
-    @RenderBody()
+
+  <ul id="SubNavigation">
+    <li><a href="einfuehrung.htm">SortBy</a></li>
+    <li><a href="mehrspaltige.htm">OrderBy</a></li>
+    <li><a href="fixbereiche.htm">DoAnythingElse</a></li>
+  </ul>
+
+
+  <div id="Content">
+@RenderBody()
+  </div>
+
+  <p id="Footer">WebMediaPortal at github.com </p>
+
 </body>
 </html>
