@@ -4,10 +4,26 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="300" d:DesignWidth="601"
 	Title="Home">
-
+    <Page.Resources>
+        <DataTemplate x:Key="UserDataTemplate">
+            <StackPanel Orientation="Horizontal">                
+                <Label HorizontalAlignment="Center" Content="{Binding Path=UserName}" />
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
     <Grid>
+        <ListBox x:Name="lbChannels" Margin="0,0,450,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>                    
+                    <StackPanel Orientation="Vertical">                        
+                        <Label Content="{Binding Name}" Width="120"/>
+                        <ItemsControl x:Name="UserList" ItemTemplate="{StaticResource UserDataTemplate}" ItemsSource="{Binding Program}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>            
+        </ListBox>
         
     </Grid>
 </Page>

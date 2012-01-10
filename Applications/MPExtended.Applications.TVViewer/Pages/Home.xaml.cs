@@ -19,9 +19,17 @@ namespace MPExtended.Applications.TVViewer.Pages
     /// </summary>
     public partial class Home : Page
     {
+        private bool _isWorking = false;
+ 
         public Home()
         {
             InitializeComponent();
+        }
+
+        public void getListBoxData()
+        {
+         
+        
         }
     }
 }

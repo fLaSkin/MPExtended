@@ -22,6 +22,8 @@ namespace MPExtended.Applications.TVViewer
         public MainWindow()
         {
             InitializeComponent();
+            Pages.Home home = new Pages.Home();
+            contentFrame.Navigate(home);
         }
     }
 }
