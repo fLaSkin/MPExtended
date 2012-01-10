@@ -3,27 +3,47 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="601"
+          mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="601" Width="600"
 	Title="Home">
     <Page.Resources>
-        <DataTemplate x:Key="UserDataTemplate">
-            <StackPanel Orientation="Horizontal">                
-                <Label HorizontalAlignment="Center" Content="{Binding Path=UserName}" />
-            </StackPanel>
-        </DataTemplate>
+
+
     </Page.Resources>
     <Grid>
-        <ListBox x:Name="lbChannels" Margin="0,0,450,0">
+        <ListBox x:Name="lbChannels">
             <ListBox.ItemTemplate>
-                <DataTemplate>                    
-                    <StackPanel Orientation="Vertical">                        
-                        <Label Content="{Binding Name}" Width="120"/>
-                        <ItemsControl x:Name="UserList" ItemTemplate="{StaticResource UserDataTemplate}" ItemsSource="{Binding Program}" />
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Name}" Width="100"/>
+                        <ListBox   ItemsSource="{Binding Programs}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="1"> 
+
+
+                                        <Label  Content="{Binding Path=Title}">
+                                            <Label.Width>
+                                                <MultiBinding Converter="{StaticResource x:ResourceKey=MyMultiValueConverter}">
+                                                    <Binding Path="StartTime" />
+                                                    <Binding Path="EndTime" />
+                                               
+                                        </MultiBinding>
+                                            </Label.Width>
+                                        </Label>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate>            
+            </ListBox.ItemTemplate>
         </ListBox>
-        
+
     </Grid>
 </Page>
