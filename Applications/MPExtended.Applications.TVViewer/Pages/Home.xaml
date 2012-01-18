@@ -11,13 +11,14 @@
 
     </Page.Resources>
     <Grid>
-        <DatePicker x:Name="dpStartDate" Margin="277,0,199,274"></DatePicker>
+        <Button x:Name="btnRefresh" Click="btnRefresh_Click"></Button>
+            <DatePicker x:Name="dpStartDate" Margin="277,0,199,274"></DatePicker>
         <DatePicker x:Name="dpEndDate" Margin="415,0,61,274"></DatePicker>
         <ListBox x:Name="lbChannels" Margin="0,32,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding Name}" Width="100"/>
+                        <Label Content="{Binding Channel.DisplayName}" Width="120"/>
                         <ListBox   ItemsSource="{Binding Programs}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -25,20 +26,17 @@
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderThickness="1"> 
-
-
-                                        <Label  Content="{Binding Path=Title}">
-                                            <Label.Width>
-                                                <MultiBinding Converter="{StaticResource x:ResourceKey=MyMultiValueConverter}">
+                                <DataTemplate>                              
+                                        <Label  Content="{Binding Title}" Width="80">
+                                            <!-- <Label.Width>
+                                               <MultiBinding Converter="{StaticResource x:ResourceKey=MyMultiValueConverter}">
                                                     <Binding Path="StartTime" />
                                                     <Binding Path="EndTime" />
                                                
                                         </MultiBinding>
-                                            </Label.Width>
+                                            </Label.Width>-->
                                         </Label>
-                                    </Border>
+                                  
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

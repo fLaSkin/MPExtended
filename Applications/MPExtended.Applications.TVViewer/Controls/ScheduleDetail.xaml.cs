@@ -12,25 +12,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MPExtended.Applications.TVViewer.Pages
+namespace MPExtended.Applications.TVViewer.Controls
 {
     /// <summary>
-    /// Interaction logic for Schedules.xaml
+    /// Interaction logic for ScheduleDetail.xaml
     /// </summary>
-    public partial class Schedules : Page
+    public partial class ScheduleDetail : UserControl
     {
-        public Schedules()
+        public ScheduleDetail()
         {
             InitializeComponent();
-        }
-
-        private void BuildScheduleList()
-        {
-
-            if (MPExtended.Libraries.General.MPEServices.HasTASConnection)
-            {
-               // lbChannels.ItemsSource = _home.GetEpgData(Properties.Settings.Default.DefaultGroup, start, end);
-            }
         }
     }
 }

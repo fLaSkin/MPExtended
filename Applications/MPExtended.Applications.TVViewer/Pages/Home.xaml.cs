@@ -28,14 +28,15 @@ namespace MPExtended.Applications.TVViewer.Pages
         Code.Home _home = new Code.Home();
         Settings _settings = new Settings();
         BackgroundWorker epgWorker = new BackgroundWorker();
-
+            
         public Home()
         {
             InitializeComponent();
 
             epgWorker.DoWork += new DoWorkEventHandler(epgWorker_DoWork);
             epgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(epgWorker_RunWorkerCompleted);
-        
+           
+            BuildDefaultEpg();
 
         }
 
@@ -49,6 +50,7 @@ namespace MPExtended.Applications.TVViewer.Pages
         void epgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _isWorking = false;
+        
             if (e.Result != null)
             {
                 lbChannels.ItemsSource = e.Result as List<EpgItem>;
@@ -57,9 +59,15 @@ namespace MPExtended.Applications.TVViewer.Pages
         void epgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             _isWorking = true;
+     
                 e.Result = _home.GetEpgData(Properties.Settings.Default.DefaultGroup, DateTime.Now, DateTime.Now.AddHours(12));
             
 
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            BuildDefaultEpg();
         }
 
      
