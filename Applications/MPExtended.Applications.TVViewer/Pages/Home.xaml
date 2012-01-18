@@ -11,7 +11,9 @@
 
     </Page.Resources>
     <Grid>
-        <ListBox x:Name="lbChannels">
+        <DatePicker x:Name="dpStartDate" Margin="277,0,199,274"></DatePicker>
+        <DatePicker x:Name="dpEndDate" Margin="415,0,61,274"></DatePicker>
+        <ListBox x:Name="lbChannels" Margin="0,32,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

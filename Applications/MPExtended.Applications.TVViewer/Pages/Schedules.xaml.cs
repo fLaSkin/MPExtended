@@ -23,5 +23,14 @@ namespace MPExtended.Applications.TVViewer.Pages
         {
             InitializeComponent();
         }
+
+        private void BuildScheduleList()
+        {
+
+            if (MPExtended.Libraries.General.MPEServices.HasTASConnection)
+            {
+                lbChannels.ItemsSource = _home.GetEpgData(Properties.Settings.Default.DefaultGroup, start, end);
+            }
+        }
     }
 }

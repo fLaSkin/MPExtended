@@ -64,12 +64,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Code\Connection.cs" />
-    <Compile Include="Code\ConnectionManager.cs" />
-    <Compile Include="Code\Epg.cs" />
-    <Compile Include="Code\Settings.cs" />
-    <Compile Include="Code\TVViewer.cs" />
-    <Compile Include="Code\WatchTV.cs" />
+    <Compile Include="Code\EpgItem.cs" />
+    <Compile Include="Code\Home.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

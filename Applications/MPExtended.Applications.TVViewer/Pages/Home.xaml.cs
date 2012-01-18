@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MPExtended.Services.TVAccessService.Interfaces;
 using System.Globalization;
+using System.ComponentModel;
+using MPExtended.Applications.TVViewer.Code;
 
 namespace MPExtended.Applications.TVViewer.Pages
 {
@@ -23,55 +25,47 @@ namespace MPExtended.Applications.TVViewer.Pages
     {
         private bool _isWorking = false;
 
+        Code.Home _home = new Code.Home();
+        Settings _settings = new Settings();
+        BackgroundWorker epgWorker = new BackgroundWorker();
+
         public Home()
         {
             InitializeComponent();
-            getListBoxData();
+
+            epgWorker.DoWork += new DoWorkEventHandler(epgWorker_DoWork);
+            epgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(epgWorker_RunWorkerCompleted);
+        
+
         }
 
-        public void getListBoxData()
+        void BuildDefaultEpg()
         {
-
-            List<WebChannelExtended> channelList = new List<WebChannelExtended>();
-            List<WebProgramBasic> list = new List<WebProgramBasic>();
-            list.Add(new WebProgramBasic
+            if (MPExtended.Libraries.General.MPEServices.HasTASConnection)
             {
-                Title = "GZSZ",
-                StartTime = DateTime.Now.AddHours(5),
-                EndTime = DateTime.Now.AddHours(10)
-            });
-            list.Add(new WebProgramBasic
-{
-    Title = "Blabla",
-    StartTime = DateTime.Now.AddHours(10),
-    EndTime = DateTime.Now.AddHours(15)
-});
-            list.Add(new WebProgramBasic
-{
-    Title = "GZSZ",
-    StartTime = DateTime.Now.AddHours(15),
-    EndTime = DateTime.Now.AddHours(20)
-});
-            channelList.Add(new WebChannelExtended
+                epgWorker.RunWorkerAsync();
+            }
+        }
+        void epgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _isWorking = false;
+            if (e.Result != null)
             {
-                Name = "ZDF",
-                Programs = list
+                lbChannels.ItemsSource = e.Result as List<EpgItem>;
+            }
+        }
+        void epgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            _isWorking = true;
+                e.Result = _home.GetEpgData(Properties.Settings.Default.DefaultGroup, DateTime.Now, DateTime.Now.AddHours(12));
+            
 
-
-
-            });
-
-            lbChannels.ItemsSource = channelList;
         }
 
-    }
-    public class WebChannelExtended
-    {
-        public string Name { get; set; }
-        public List<WebProgramBasic> Programs { get; set; }
-
+     
 
     }
+
 
     public class MyMultiValueConverter : IMultiValueConverter
     {
@@ -88,7 +82,7 @@ namespace MPExtended.Applications.TVViewer.Pages
         {
             throw new NotImplementedException();
         }
-    } 
-    
-  
+    }
+
+
 }
