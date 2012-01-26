@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace MPExtended.Applications.TVViewer.Pages
 {
     /// <summary>
-    /// Interaction logic for Settings.xaml
+    /// Interaction logic for Recordings.xaml
     /// </summary>
-    public partial class Settings : Page
+    public partial class PageRecordings : Page
     {
-        public Settings()
+        public PageRecordings()
         {
             InitializeComponent();
         }
