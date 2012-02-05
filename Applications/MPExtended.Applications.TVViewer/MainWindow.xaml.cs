@@ -19,11 +19,25 @@ namespace MPExtended.Applications.TVViewer
     /// </summary>
     public partial class MainWindow : Window
     {
+        Pages.PageHome home = new Pages.PageHome();
+        Pages.PageSchedules schedules = new Pages.PageSchedules();
         public MainWindow()
         {
             InitializeComponent();
-            Pages.PageHome home = new Pages.PageHome();
+            
             contentFrame.Navigate(home);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            contentFrame.Navigate(schedules);
+        }
+        private void isServiceConnected()
+        {
+            if (!MPExtended.Libraries.General.MPEServices.HasTASConnection)
+            {
+                MessageBox.Show("No connection");
+            }
         }
     }
 }

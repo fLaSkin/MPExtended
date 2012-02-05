@@ -25,30 +25,32 @@ namespace MPExtended.Applications.TVViewer.Code
             _scheduleWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(epgWorker_RunWorkerCompleted);
         }
 
-        private bool ReceiveData()
+        public bool ReceiveData()
         {
             if (MPExtended.Libraries.General.MPEServices.HasTASConnection)
             {
-                _scheduleWorker.RunWorkerAsync();
+                if (!_scheduleWorker.IsBusy)
+                {
+                    _scheduleWorker.RunWorkerAsync();
+                }
                 return true;
             }
             return false;
         }
-        public void ReceiveData()
-        {
-            if (!_scheduleWorker.IsBusy)
-            {
-                _scheduleWorker.RunWorkerAsync(); 
-            }
-        }
-        public void ReceiveData(DateTime start, DateTime end)
+
+        public bool ReceiveData(DateTime start, DateTime end)
         {
             _start = start;
             _end = end;
-            if (!_scheduleWorker.IsBusy)
+            if (MPExtended.Libraries.General.MPEServices.HasTASConnection)
             {
-                _scheduleWorker.RunWorkerAsync();
+                if (!_scheduleWorker.IsBusy)
+                {
+                    _scheduleWorker.RunWorkerAsync();
+                }
+                return true;
             }
+            return false;
         }
         private List<WebScheduleBasic> _GetSchedules(DateTime? start, DateTime? end)
         {

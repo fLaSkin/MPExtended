@@ -46,7 +46,7 @@ namespace MPExtended.Applications.TVViewer.Pages
 
         void Home_OnEpgDataReceived(List<EpgItem> epg)
         {
-            lbChannels.Items.Clear();
+        
             lbChannels.ItemsSource = epg;
         }
 
@@ -68,29 +68,45 @@ namespace MPExtended.Applications.TVViewer.Pages
                     WebChannelBasic channel = item.Channel;
                     if (channel != null)
                     {
-                        try
-                        {
-                            MediaPlayerControl player = new MediaPlayerControl();
-                            string url = MPEServices.TAS.SwitchTVServerToChannelAndGetStreamingUrl("TVViewer", channel.Id);
-                            if (!String.IsNullOrEmpty(url))
-                            {
-                                player.PlayStream(url);
-                                Window window = new Window
-                             {
-                                 Title = "My User Control Dialog",
-                                 Content = player
-                             };
+                        //try
+                        //{
+                        //    MediaPlayerControl player = new MediaPlayerControl();
+                        //    string url = MPEServices.TAS.SwitchTVServerToChannelAndGetStreamingUrl("TVViewer", channel.Id);
+                        //    if (!String.IsNullOrEmpty(url))
+                        //    {
+                        //        player.PlayStream(url);
+                        //        Window window = new Window
+                        //     {
+                        //         Title = "My User Control Dialog",
+                        //         Content = player
+                        //     };
 
-                                window.ShowDialog();
-                            }
+                        //        window.ShowDialog();
+                        //    }
 
-                        }
-                        catch (Exception ex)
-                        {
-                            tbException.Text = ex.ToString();
-                        }
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    tbException.Text = ex.ToString();
+                        //}
 
                     }
+
+                }
+            }
+        }
+
+        private void lbPrograms_Selected(object sender, RoutedEventArgs e)
+        {
+
+            if (e.OriginalSource is ListBoxItem)
+            {
+                if (((ListBoxItem)e.OriginalSource).Content is WebProgramBasic)
+                {
+                    WebProgramBasic item = ((ListBoxItem)e.OriginalSource).Content as WebProgramBasic;
+                    MessageBox.Show(item.GetType().ToString());                   
+
+                    
 
                 }
             }
@@ -105,10 +121,10 @@ namespace MPExtended.Applications.TVViewer.Pages
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan time = ((DateTime)values[1]).Subtract((DateTime)values[0]);
-            int percentage = 12 * time.Hours / 99;
-            double windowWidth = (double)values[2];
+            double percentage = 12 * time.Hours / 99;
+            double windowWidth = (double)values[2];         
             double width = windowWidth / 12 * percentage;
-            return width;
+            return System.Convert.ToDouble(width);
         }
 
         public object[] ConvertBack(object values, Type[] targetType, object parameter, CultureInfo culture)

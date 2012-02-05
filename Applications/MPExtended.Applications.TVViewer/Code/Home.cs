@@ -14,7 +14,7 @@ namespace MPExtended.Applications.TVViewer.Code
         public delegate void ReceiveEpgDataEventHandler(List<EpgItem> epg);
         public event ReceiveEpgDataEventHandler OnEpgDataReceived;
 
-        int _groupId = 0;
+        int _groupId = 2;
         DateTime _start = DateTime.Now;
         DateTime _end = DateTime.Now.AddHours(12);
         public Home()

@@ -1,20 +1,61 @@
 ﻿<Page x:Class="MPExtended.Applications.TVViewer.Pages.PageSchedules"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:c="clr-namespace:MPExtended.Applications.TVViewer.Controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+           xmlns:conv="clr-namespace:MPExtended.Applications.TVViewer.Pages"
       mc:Ignorable="d" 
+      
       d:DesignHeight="300" d:DesignWidth="580"
 	Title="Schedules">
+    <Page.Resources>
+        <conv:DateTimeConverter x:Key="dateConverter"/>
+    </Page.Resources>
     <Grid>
-        <ListBox x:Name="lbSchedules" Margin="0,0,313,0">
-            
+        <ListBox x:Name="lbSchedules" Margin="0,0,301,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border>
+                        <Grid >
+                            <Rectangle Margin="1" Stroke="#FF2D2D2D" Fill="Transparent" MinWidth="396" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <Rectangle.Effect>
+                                    <DropShadowEffect Opacity="0.695" BlurRadius="14" ShadowDepth="0" Color="#FF434343"/>
+                                </Rectangle.Effect>
+                            </Rectangle>
+                            <StackPanel Margin="3">
+                                <DockPanel >
+                                    <TextBlock FontWeight="Bold" Text="Sendung:" DockPanel.Dock="Left" Margin="5,0,10,0"/>
+                                    <TextBlock Text="  " />
+                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ProgramName}"  />
+                                </DockPanel>
+                                <DockPanel >
+                                    <TextBlock FontWeight="Bold" Text="Beginn:" DockPanel.Dock="Left" Margin="5,0,5,0"/>
+                                    <TextBlock Text="  " />
+                                    <TextBlock Text="{Binding Path=StartTime,Converter={StaticResource dateConverter}}" />
+                                </DockPanel>
+                                <DockPanel >
+                                    <TextBlock FontWeight="Bold" Text="Ende:" DockPanel.Dock="Left" Margin="5,0,5,0"/>
+                                    <TextBlock Text="  " />
+                                    <TextBlock Text="{Binding Path=EndTime,Converter={StaticResource dateConverter}}" />
+                                </DockPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="MaxWidth" Value="400"/>
+                    <EventSetter Event="ListBoxItem.Selected" Handler="lbSchedules_Selected" HandledEventsToo="True"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
         <Grid x:Name="grdDetails" Margin="285,0,0,0">
-            
-            
+            <TextBox x:Name="tbProgramName"></TextBox>
+            <TextBlock x:Name="tbProgramDescription"></TextBlock>
         </Grid>
-        
-        
+        <c:ControlAddSchedule Visibility="Hidden"></c:ControlAddSchedule>
+
     </Grid>
 </Page>

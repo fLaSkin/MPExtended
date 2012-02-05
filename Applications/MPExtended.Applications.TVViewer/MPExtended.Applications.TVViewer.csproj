@@ -65,11 +65,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\MediaPlayerControl.xaml">
+    <Page Include="Controls\ControlAddSchedule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ScheduleDetail.xaml">
+    <Page Include="Controls\MediaPlayerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -84,11 +84,11 @@
     <Compile Include="Code\EpgItem.cs" />
     <Compile Include="Code\Home.cs" />
     <Compile Include="Code\Schedules.cs" />
+    <Compile Include="Controls\ControlAddSchedule.xaml.cs">
+      <DependentUpon>ControlAddSchedule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MediaPlayerControl.xaml.cs">
       <DependentUpon>MediaPlayerControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ScheduleDetail.xaml.cs">
-      <DependentUpon>ScheduleDetail.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -110,6 +110,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\PageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\PageHome.xaml.cs">
@@ -123,6 +127,9 @@
     </Compile>
     <Compile Include="Pages\PageSettings.xaml.cs">
       <DependentUpon>PageSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageViewer.xaml.cs">
+      <DependentUpon>PageViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

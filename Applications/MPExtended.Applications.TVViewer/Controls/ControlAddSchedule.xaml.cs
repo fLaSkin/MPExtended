@@ -15,13 +15,18 @@ using System.Windows.Shapes;
 namespace MPExtended.Applications.TVViewer.Controls
 {
     /// <summary>
-    /// Interaction logic for ScheduleDetail.xaml
+    /// Interaction logic for ControlAddSchedule.xaml
     /// </summary>
-    public partial class ScheduleDetail : UserControl
+    public partial class ControlAddSchedule : UserControl
     {
-        public ScheduleDetail()
+        public ControlAddSchedule()
         {
             InitializeComponent();
+        }
+
+        private void btnSchedule_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

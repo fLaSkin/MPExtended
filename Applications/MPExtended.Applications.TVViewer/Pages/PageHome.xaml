@@ -21,21 +21,16 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Channel.DisplayName}" Width="120"/>
-                        <ListBox   ItemsSource="{Binding Programs}" BorderThickness="0">
+                        <ListBox   ItemsSource="{Binding Programs}" BorderThickness="0" Margin="0">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-
                                     <StackPanel Orientation="Horizontal"/>
-
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                                             
-                                        <Label x:Name="lblProgram"  Content="{Binding Title}" DockPanel.Dock="Left">
-                                        
-                                        </Label>
-                                
+                                <DataTemplate>                                                             
+                                        <Label x:Name="lblProgram"  Content="{Binding Title}">                                        
+                                        </Label>                                
                               
 
 
@@ -43,27 +38,18 @@
                             </ListBox.ItemTemplate>
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
-                                    <EventSetter Event="ListBoxItem.Selected" Handler="lbChannels_Selected" HandledEventsToo="True"/>
-                                    <!--<Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBoxItem">
-                                                <StackPanel>
-                                                    <ContentPresenter/>
-                                                    <Separator/>
-                                                </StackPanel>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>-->
-                                    <!--<Setter Property="BorderBrush" Value="Black"/>
-                                    <Setter Property="BorderThickness" Value="1"/>-->
+                                    <EventSetter Event="ListBoxItem.Selected" Handler="lbPrograms_Selected" HandledEventsToo="True"/>
                                     <Setter Property="Width">
                                         <Setter.Value>
                                             <MultiBinding Converter="{StaticResource MyMultiValueConverter}">
                                                 <Binding Path="StartTime" />
                                                 <Binding Path="EndTime" />
-                                                <Binding ElementName="lbChannels" Path="Width" />
+                                                <Binding ElementName="HomePage" Path="Width" />
                                             </MultiBinding>
                                         </Setter.Value>                                  
+                                    </Setter>
+                                    <Setter Property="Foreground">
+                                        <Setter.Value>Black</Setter.Value>
                                     </Setter>
                                 </Style>
                             </ListBox.ItemContainerStyle>
@@ -77,6 +63,5 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <TextBox x:Name="tbException" Margin="561,0,0,0"></TextBox>
     </Grid>
 </Page>
