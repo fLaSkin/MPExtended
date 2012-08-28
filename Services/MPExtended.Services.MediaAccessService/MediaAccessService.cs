@@ -936,6 +936,18 @@ namespace MPExtended.Services.MediaAccessService
             return null;
         }
 
+        public List<WebFilterOperator> GetFilterOperators()
+        {
+            List<WebFilterOperator> operators = new List<WebFilterOperator>();
+            operators.Add(new WebFilterOperator("==", "equals"));
+            operators.Add(new WebFilterOperator("!=", "not"));
+            operators.Add(new WebFilterOperator(">", "greater than"));
+            operators.Add(new WebFilterOperator("<", "less than"));
+            //...
+            operators.Add(new WebFilterOperator("s", "starts with"));
+            return operators;
+        }
+
         #endregion
 
     }
