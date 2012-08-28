@@ -923,5 +923,19 @@ namespace MPExtended.Services.MediaAccessService
             return PlaylistLibraries[provider].DeletePlaylist(playlistId);
         }
         #endregion
+
+        #region Filters
+        public List<WebFilter> GetAvailableFilters(int provider)
+        {
+            return null;
+        }
+
+        public List<WebFilterElement> GetFilterElements(string filter, string element = null)
+        {
+            return null;
+        }
+
+        #endregion
+
     }
 }
