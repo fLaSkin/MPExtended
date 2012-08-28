@@ -925,12 +925,13 @@ namespace MPExtended.Services.MediaAccessService
         #endregion
 
         #region Filters
-        public List<WebFilter> GetAvailableFilters(int provider)
+
+        public List<WebStringResult> GetFilterElements(int provider, WebMediaType mediaType, string filterField)
         {
             return null;
         }
 
-        public List<WebFilterElement> GetFilterElements(string filter, string element = null)
+        public String CreateFilter(string field, string op, string value, string conjunction)
         {
             return null;
         }
