@@ -20,10 +20,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.ServiceModel.Web;
-using System.Text;
 using MPExtended.Libraries.Client;
 using MPExtended.Libraries.Service;
 using MPExtended.Libraries.Service.Shared;
@@ -186,7 +187,7 @@ namespace MPExtended.Services.StreamingService.Code
             return StreamImage(new ImageMediaSource(tempFile));
         }
 
-        public static Stream GetResizedImage(ImageMediaSource src, int? maxWidth, int? maxHeight)
+        public static Stream GetResizedImage(ImageMediaSource src, int? maxWidth, int? maxHeight, bool forceRequestedFormat)
         {
             // load file
             if (!src.Exists)
@@ -197,18 +198,12 @@ namespace MPExtended.Services.StreamingService.Code
             }
 
             // create cache path
-            string filename = String.Format("resize_{0}_{1}_{2}.jpg", src.GetUniqueIdentifier(), maxWidth, maxHeight);
+            string filename = String.Format("resize_{0}_{1}_{2}_{3}.png", src.GetUniqueIdentifier(), maxWidth, maxHeight, forceRequestedFormat);
 
             // check for existence on disk
             if (!cache.Contains(filename))
             {
-                Image orig;
-                using (var impersonator = src.GetImpersonator())
-                {
-                    orig = Image.FromStream(src.Retrieve());
-                }
-
-                if (!ResizeImage(orig, cache.GetPath(filename), maxWidth, maxHeight))
+                if (!ResizeImage(src.Retrieve(), cache.GetPath(filename), maxWidth, maxHeight, forceRequestedFormat))
                 {
                     WCFUtil.SetResponseCode(System.Net.HttpStatusCode.InternalServerError);
                     return Stream.Null;
@@ -245,22 +240,43 @@ namespace MPExtended.Services.StreamingService.Code
             return src.Retrieve();
         }
 
-        private static bool ResizeImage(Image origImage, string newFile, int? maxWidth, int? maxHeight)
+        private static bool ResizeImage(Stream inputStream, string newFile, int? maxWidth, int? maxHeight, bool addBorders)
+        {
+            using (var image = Image.FromStream(inputStream))
+            {
+                return ResizeImage(Image.FromStream(inputStream), newFile, maxWidth, maxHeight, addBorders);
+            }
+        }
+
+        private static bool ResizeImage(Image origImage, string newFile, int? maxWidth, int? maxHeight, bool addBorders)
         {
             try
             {
+                if (addBorders && (!maxWidth.HasValue || !maxHeight.HasValue))
+                {
+                    Log.Error("ResizeImage() called with addBorders=true but width or height is null");
+                    throw new ArgumentException("Both width and height parameters need to be specified when requesting borders");
+                }
+
                 Resolution newSize = Resolution.Calculate(origImage.Width, origImage.Height, maxWidth, maxHeight, 1);
+                using (Bitmap newImage = new Bitmap(
+                    addBorders ? maxWidth.Value : newSize.Width,
+                    addBorders ? maxHeight.Value : newSize.Height,
+                    PixelFormat.Format32bppArgb))
+                {
+                    using (Graphics graphic = Graphics.FromImage(newImage))
+                    {
+                        graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        graphic.SmoothingMode = SmoothingMode.HighQuality;
+                        graphic.CompositingQuality = CompositingQuality.HighQuality;
+                        graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                        int leftOffset = (maxWidth.Value - newSize.Width) / 2;
+                        int heightOffset = (maxHeight.Value - newSize.Height) / 2;
+                        graphic.DrawImage(origImage, leftOffset, heightOffset, newSize.Width, newSize.Height);
+                    }
 
-                Bitmap newImage = new Bitmap(newSize.Width, newSize.Height);
-
-                Graphics g = Graphics.FromImage((Image)newImage);
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-                g.DrawImage(origImage, 0, 0, newSize.Width, newSize.Height);
-                g.Dispose();
-
-                // Save resized picture
-                newImage.Save(newFile);
+                    newImage.Save(newFile);
+                }
                 return true;
             }
             catch (Exception ex)
